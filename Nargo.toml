@@ -1,0 +1,7 @@
+[package]
+name = "hydra"
+type = "lib"
+authors = ["TACEO-Labs"]
+compiler_version = "0.10.5"
+
+[dependencies]
