@@ -30,10 +30,10 @@ For our experiments, we varied the amount of encrypted field elements. Hydra out
 ```Rust
     use dep::hydra;
 
-    fn main(plains: [Field; 8], key : [Field; 4], iv: [Field;4]) -> pub [Field; 8] {
-        let (ks, _) = hydra::bn254::ks::hydra_body(key, iv);
-        let mut ciphers = [0; 8];
-        for i in 0..8 {
+    fn main(plains: [Field; 4], key : [Field; 4], iv: [Field;4]) -> pub [Field; 4] {
+        let ks = bn254::ks::hydra_body_ks(key, iv);
+        let mut ciphers = [0; 4];
+        for i in 0..4 {
             ciphers[i] = plains[i] + ks[i];
         }
         ciphers
@@ -45,7 +45,7 @@ We also compared our implementation with the [MiMC-Sponge](https://github.com/se
 | #Field elements | Hydra | Hydra (only body) | GMiMC | MiMCSponge |
 | --------------- | ----- | ----------------- | ----- | ---------- |
 | 4               | 6189  | 2351              | 3837  | 23331      |
-| 8               | 6621  | 2582              | 5580  | 57319      |
+| 8               | 6621  | -                 | 5580  | 57319      |
 | 12              | 10702 | -                 | 9138  | 94182      |
 | 16              | 11142 | -                 | 20403 | 132926     |
 | 20              | 15313 | -                 | -     | -          |
