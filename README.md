@@ -25,7 +25,7 @@ We tested our implementation with version 0.10.5 of the Noir compiler and the fo
     }
 ```
 
-For our experiments, we varied the amount of encrypted field elements. Hydra outperforms [gMiMC](https://github.com/TaceoLabs/noir-hydra/blob/main/src/bn254/ks.nr) starting at 10 Field elements. It is possible to only use the Hydra's body to generate eight key stream elements when the plaintext only consists of maximal eight elements:
+For our experiments, we varied the amount of encrypted field elements. Hydra outperforms [gMiMC](https://github.com/TaceoLabs/noir-GMiMC/tree/main) starting at 10 Field elements. It is possible to only use the Hydra's body to generate eight key stream elements when the plaintext only consists of maximal eight elements:
 
 ```Rust
     use dep::hydra;
@@ -50,6 +50,9 @@ We also compared our implementation with the [MiMC-Sponge](https://github.com/se
 | 16              | 11142 | -                 | 20403 | 132926     |
 | 20              | 15313 | -                 | -     | -          |
 | 24              | 15761 | -                 | -     | -          |
+
+In this implementation, the bulk of constraints come from the heads of the hydra. Every head creates eight key stream elements, therefore the constraints increase on every multiple of eight.
+Theoretically, the heads should be much cheaper than the body, we are still investigating why the constraints increase by $\aprox $4k. Still, Hydra outperforms its peers by a good amount.
 
 ## Installation
 
