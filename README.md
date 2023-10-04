@@ -40,7 +40,7 @@ For our experiments, we varied the amount of encrypted field elements. Hydra out
     }
 ```
 
-We also compared our implementation with [](). We used the `MiMCSponge` function to create a key stream of size N. The results can be seen in the following table (cells represent the amount of constraints by `nargo info`):
+We also compared our implementation with the [MiMC-Sponge](https://github.com/seugu/Noir-MiMCsponge/tree/main) crate. We used the `MiMCSponge` function to create a key stream of size N. The results can be seen in the following table (cells represent the amount of constraints by `nargo info`):
 
 | #Field elements | Hydra | Hydra (only body) | gMiMC | MiMCSponge |
 | --------------- | ----- | ----------------- | ----- | ---------- |
