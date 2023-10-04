@@ -52,7 +52,7 @@ We also compared our implementation with the [MiMC-Sponge](https://github.com/se
 | 24              | 15761 | -                 | -     | -          |
 
 In this implementation, the bulk of constraints come from the heads of the hydra. Every head creates eight key stream elements, therefore the constraints increase on every multiple of eight.
-Theoretically, the heads should be much cheaper than the body, we are still investigating why the constraints increase by $\aprox $4k. Still, Hydra outperforms its peers by a good amount.
+Theoretically, the heads should be much cheaper than the body, we are still investigating why the constraints increase by $\aprox $ 4k. Still, Hydra outperforms its peers by a good amount.
 
 ## Installation
 
