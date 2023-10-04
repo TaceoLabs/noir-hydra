@@ -1,6 +1,7 @@
 use crate::bn254::ks;
 use dep::std::collections::vec::Vec;
 
+//encrypts up to 8000 Field Elements
 fn encrypt<R>(plains: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]{
     let mut ciphers = [0; R];
     let (mut state, extended_key) = ks::hydra_body(key, iv);
@@ -16,7 +17,7 @@ fn encrypt<R>(plains: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]{
         for i in 8..R {
             let off = i % 8;
             if off == 0 {
-                let result = ks::hydra_head(state, extended_key);
+                let result = ks::hydra_head(state, extended_key, off);
                 state = result.0;
                 ks = result.1;
             }

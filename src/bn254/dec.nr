@@ -15,7 +15,7 @@ fn decrypt<R>(ciphers: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]
         for i in 8..R {
             let off = i % 8;
             if off == 0 {
-                let result = ks::hydra_head(state, extended_key);
+                let result = ks::hydra_head(state, extended_key, off);
                 state = result.0;
                 ks = result.1;
             }

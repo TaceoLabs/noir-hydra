@@ -19,9 +19,9 @@ fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
 }
 
 
-fn hydra_head<R>(state: [Field; 8], key: [Field; 8]) -> ([Field; 8], [Field; 8]) {
-    let roll = rolling(state);
-    (rolling(state), vec_add(permutation_h(roll, key), roll))
+fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
+    let roll = rolling(state, index);
+    (roll, vec_add(permutation_h(roll, key), roll))
 }
 
 fn copy_vec<R>(src: [Field; 8], mut dst: [Field; R], off: u64) -> [Field; R] {
@@ -32,12 +32,12 @@ fn copy_vec<R>(src: [Field; 8], mut dst: [Field; R], off: u64) -> [Field; R] {
 }
 
 
-fn rolling(state: [Field; 8]) -> [Field; 8]{
+fn rolling(state: [Field; 8], index: u32) -> [Field; 8]{
     let (y, z) = vec_split(state);
     let (y, z) = non_linear_r(y, z);
     let y_perm = matrix_i(y, consts::Mi);
     let z_perm = matrix_i(z, consts::Mi);
-    vec_add(vec_concat(y_perm, z_perm), consts::rc_r)
+    vec_add(vec_concat(y_perm, z_perm), consts::rc_r[index])
 }
 
 fn permutation_h(mut roll: [Field; 8], extended_key: [Field; 8]) -> [Field; 8] {
