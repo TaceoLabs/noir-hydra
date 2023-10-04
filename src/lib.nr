@@ -1,6 +1,4 @@
 mod bn254;
-mod vec;
-use dep::std;
     
 #[test]
 fn test_enc_dec_4_body_ks() {
