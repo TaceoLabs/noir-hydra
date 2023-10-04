@@ -25,7 +25,7 @@ We tested our implementation with version 0.10.5 of the Noir compiler and the fo
     }
 ```
 
-For our experiments, we varied the amount of encrypted field elements. Hydra outperforms [gMiMC](https://github.com/TaceoLabs/noir-GMiMC/tree/main) starting at 10 Field elements. It is possible to only use the Hydra's body to generate eight key stream elements when the plaintext only consists of maximal eight elements:
+For our experiments, we varied the amount of encrypted field elements. Hydra outperforms [GMiMC](https://github.com/TaceoLabs/noir-GMiMC/tree/main) starting at 10 Field elements. It is possible to only use the Hydra's body to generate four key stream elements when the plaintext only consists of maximal four elements:
 
 ```Rust
     use dep::hydra;
@@ -42,7 +42,7 @@ For our experiments, we varied the amount of encrypted field elements. Hydra out
 
 We also compared our implementation with the [MiMC-Sponge](https://github.com/seugu/Noir-MiMCsponge/tree/main) crate. We used the `MiMCSponge` function to create a key stream of size N. The results can be seen in the following table (cells represent the amount of constraints by `nargo info`):
 
-| #Field elements | Hydra | Hydra (only body) | gMiMC | MiMCSponge |
+| #Field elements | Hydra | Hydra (only body) | GMiMC | MiMCSponge |
 | --------------- | ----- | ----------------- | ----- | ---------- |
 | 4               | 6189  | 2351              | 3837  | 23331      |
 | 8               | 6621  | 2582              | 5580  | 57319      |

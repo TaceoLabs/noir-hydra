@@ -1,6 +1,7 @@
 use crate::bn254::ks;
 use dep::std::collections::vec::Vec;
 
+
 //encrypts up to 8000 Field Elements
 fn encrypt<R>(plains: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]{
     let mut ciphers = [0; R];
