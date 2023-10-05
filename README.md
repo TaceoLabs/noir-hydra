@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repository contains a Noir crate implementing the Hydra block cipher for Noir's native curve BN254.
+This repository contains a Noir crate implementing the Hydra stream cipher for Noir's native curve BN254.
 
 Hydra consists of a set of multiple permutations and round functions and is optimized for encrypting large amounts of data while minimizing the number of multiplications. You can see the design of Hydra in the following picture:
 ![Hydra Design](https://github.com/TaceoLabs/noir-hydra/blob/1847fdcec75c1f25979f943e993cc16c04910c58/fig/hydra.jpeg)
