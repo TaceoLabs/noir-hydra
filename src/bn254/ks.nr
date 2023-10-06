@@ -127,7 +127,7 @@ fn rotate_left<R>(mat: [Field; R]) -> [Field; R] {
 fn non_linear_h(roll: [Field; 8]) -> [Field; 8] {
     let mut dot = roll[0] + roll[1] + roll[2] + roll[3] 
                 - roll[4] - roll[5] - roll[6] - roll[7];
-    dot = dot.pow_32(2);
+    dot = square(dot);
     roll.map(|r| r + dot)
 }
 
