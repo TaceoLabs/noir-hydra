@@ -60,7 +60,7 @@ In your `Nargo.toml` file, add the following dependency:
 
 ```toml
 [dependencies]
-hydra = { tag = "v0.1.0", git = "https://github.com/TaceoLabs/noir-hydra" }
+hydra = { tag = "v0.2.0", git = "https://github.com/TaceoLabs/noir-hydra" }
 ```
 
 ## Examples
