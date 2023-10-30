@@ -1,7 +1,7 @@
 use crate::bn254::consts;
 
 
-fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field; 8]) {
+pub fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field; 8]) {
     let (mut state, z) = permutation_b(vec_add(iv, key));
     state = vec_add(state, key);
     (
@@ -10,12 +10,12 @@ fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field; 8]) {
     )
 } 
 
-fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
+pub fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
     vec_add(permutation_h(state, key), state)
 }
 
 
-fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
+pub fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
     let roll = rolling(state, index);
     (roll, vec_add(permutation_h(roll, key), roll))
 }
@@ -74,7 +74,7 @@ fn permutation_b(state: [Field; 4]) -> ([Field;4], [Field; 4]) {
     (state, acc)
 }
 
-fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
+pub fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
     let state = vec_add(key, iv);
     let mut state = matrix_e(state);
     for i in 0..consts::Re_1 {

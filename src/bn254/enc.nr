@@ -3,7 +3,7 @@ use dep::std::collections::vec::Vec;
 
 
 //encrypts up to 8000 Field Elements
-fn encrypt<R>(plains: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]{
+pub fn encrypt<R>(plains: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R]{
     let mut ciphers = [0; R];
     let (mut state, extended_key) = ks::hydra_body(key, iv);
     let mut ks = ks::hydra_first_head(state, extended_key);
