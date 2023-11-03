@@ -1,5 +1,6 @@
 use crate::bn254::ks;
-//todo discuss interface (nonce merged with iv??)
+
+#[field(bn254)]
 pub fn decrypt<R>(ciphers: [Field; R], key:[Field; 4],  iv:[Field; 4]) -> [Field; R] {
     let mut plains = [0; R];
     let (mut state, extended_key) = ks::hydra_body(key, iv);

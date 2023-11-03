@@ -1,15 +1,18 @@
 use crate::bn254::consts;
 
+#[field(bn254)]
 pub fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field; 8]) {
     let (mut state, z) = permutation_b(vec_add(iv, key));
     state = vec_add(state, key);
     (vec_concat(state, z), vec_concat(key, matrix_e(key)))
 }
 
+#[field(bn254)]
 pub fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
     vec_add(permutation_h(state, key), state)
 }
 
+#[field(bn254)]
 pub fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
     let roll = rolling(state, index);
     (roll, vec_add(permutation_h(roll, key), roll))
@@ -68,6 +71,7 @@ fn permutation_b(state: [Field; 4]) -> ([Field;4], [Field; 4]) {
     (state, acc)
 }
 
+#[field(bn254)]
 pub fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
     let state = vec_add(key, iv);
     let mut state = matrix_e(state);
