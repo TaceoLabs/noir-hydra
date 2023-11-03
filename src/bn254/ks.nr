@@ -1,19 +1,14 @@
 use crate::bn254::consts;
 
-
 pub fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field; 8]) {
     let (mut state, z) = permutation_b(vec_add(iv, key));
     state = vec_add(state, key);
-    (
-        vec_concat(state, z),
-        vec_concat(key, matrix_e(key))
-    )
-} 
+    (vec_concat(state, z), vec_concat(key, matrix_e(key)))
+}
 
 pub fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
     vec_add(permutation_h(state, key), state)
 }
-
 
 pub fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
     let roll = rolling(state, index);
@@ -27,8 +22,7 @@ fn copy_vec<R>(src: [Field; 8], mut dst: [Field; R], off: u64) -> [Field; R] {
     dst
 }
 
-
-fn rolling(state: [Field; 8], index: u32) -> [Field; 8]{
+fn rolling(state: [Field; 8], index: u32) -> [Field; 8] {
     let (y, z) = vec_split(state);
     let (y, z) = non_linear_r(y, z);
     let y_perm = matrix_i(y, consts::Mi);
@@ -132,23 +126,13 @@ fn non_linear_h(roll: [Field; 8]) -> [Field; 8] {
 }
 
 fn non_linear_e(state: [Field;4]) -> [Field; 4] {
-    [
-        state[0].pow_32(5),
-        state[1].pow_32(5),
-        state[2].pow_32(5),
-        state[3].pow_32(5),
-    ]
+    [state[0].pow_32(5), state[1].pow_32(5), state[2].pow_32(5), state[3].pow_32(5)]
 }
 
 fn non_linear_i(state: [Field; 4]) -> [Field;4] {
     let (dot1, dot2) = get_lm_dot(state);
-    let sum = square(square(dot1) + dot2); 
-    [
-        state[0] + sum,
-        state[1] + sum,
-        state[2] + sum,
-        state[3] + sum,
-    ]
+    let sum = square(square(dot1) + dot2);
+    [state[0] + sum, state[1] + sum, state[2] + sum, state[3] + sum]
 }
 
 fn non_linear_r(y: [Field;4], z: [Field; 4]) -> ([Field; 4], [Field; 4]) {
@@ -156,10 +140,7 @@ fn non_linear_r(y: [Field;4], z: [Field; 4]) -> ([Field; 4], [Field; 4]) {
     let (wz, vz) = get_lm_dot(z);
     let v = (vy * vz);
     let w = (wy * wz);
-    (
-        y.map(|yi| yi + v),
-        z.map(|zi| zi + w)
-    )
+    (y.map(|yi| yi + v), z.map(|zi| zi + w))
 }
 
 fn get_lm_dot(state: [Field; 4]) -> (Field, Field) {
@@ -172,32 +153,11 @@ fn square(x: Field) -> Field {
 }
 
 fn vec_concat(lhs:  [Field; 4], rhs: [Field; 4]) -> [Field; 8] {
-    [
-        lhs[0],
-        lhs[1],
-        lhs[2],
-        lhs[3],
-        rhs[0],
-        rhs[1],
-        rhs[2],
-        rhs[3],
-    ]
+    [lhs[0], lhs[1], lhs[2], lhs[3], rhs[0], rhs[1], rhs[2], rhs[3]]
 }
 
-
 fn vec_split(vec:  [Field; 8]) -> ([Field; 4], [Field; 4]) {
-    ([
-        vec[0],
-        vec[1],
-        vec[2],
-        vec[3],
-    ],
-    [
-        vec[4],
-        vec[5],
-        vec[6],
-        vec[7],
-    ])
+    ([vec[0], vec[1], vec[2], vec[3]], [vec[4], vec[5], vec[6], vec[7]])
 }
 
 fn vec_add<R>(lhs: [Field; R], rhs: [Field; R]) -> [Field; R] {
@@ -206,14 +166,13 @@ fn vec_add<R>(lhs: [Field; R], rhs: [Field; R]) -> [Field; R] {
         result[i] = lhs[i] + rhs[i];
     }
     result
-} 
+}
 
 #[test]
 fn test_rotate_left() {
     let test = [0,1,2,3,4,5,6,7];
     assert(rotate_left(test) == [1,2,3,4,5,6,7,0]);
 }
-
 
 #[test]
 fn test_get_lm_dot() {
