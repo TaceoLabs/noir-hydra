@@ -73,7 +73,7 @@ fn permutation_b(state: [Field; 4]) -> ([Field;4], [Field; 4]) {
 }
 
 #[field(bn254)]
-pub fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
+pub(crate) fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
     let state = vec_add(key, iv);
     let mut state = matrix_e(state);
     for i in 0..consts::Re_1 {
