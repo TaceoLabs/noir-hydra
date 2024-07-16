@@ -1,8 +1,8 @@
-global rounds: Field = 5;
-global Re_1: Field = 2;
-global Re_2: Field = 4;
-global Ri: Field = 41;
-global Rh: Field = 39;
+global rounds: u64 = 5;
+global Re_1: u64 = 2;
+global Re_2: u64 = 4;
+global Ri: u64 = 41;
+global Rh: u64 = 39;
 
 global rc_b: [[Field; 4]; 47] = [
     [
