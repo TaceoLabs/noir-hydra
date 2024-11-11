@@ -1,4 +1,4 @@
-mod bn254;
+pub mod bn254;
 
 #[test]
 fn test_enc_dec_4_body_ks() {
