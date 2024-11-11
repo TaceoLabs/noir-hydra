@@ -1,4 +1,4 @@
 mod consts;
-mod dec;
-mod enc;
-mod ks;
+pub mod dec;
+pub mod enc;
+pub mod ks;

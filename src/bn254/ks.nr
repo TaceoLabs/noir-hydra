@@ -8,22 +8,16 @@ pub(crate) fn hydra_body(key: [Field; 4], iv: [Field; 4]) -> ([Field; 8], [Field
 }
 
 #[field(bn254)]
-pub(crate) fn hydra_first_head<R>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
+pub(crate) fn hydra_first_head<let R: u32>(state: [Field; 8], key: [Field; 8]) ->  [Field; 8] {
     vec_add(permutation_h(state, key), state)
 }
 
 #[field(bn254)]
-pub(crate) fn hydra_head<R>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
+pub(crate) fn hydra_head<let R: u32>(state: [Field; 8], key: [Field; 8], index: u32) -> ([Field; 8], [Field; 8]) {
     let roll = rolling(state, index);
     (roll, vec_add(permutation_h(roll, key), roll))
 }
 
-fn copy_vec<R>(src: [Field; 8], mut dst: [Field; R], off: u64) -> [Field; R] {
-    for i in 0..8 {
-        dst[off + i] = src[i];
-    }
-    dst
-}
 
 fn rolling(state: [Field; 8], index: u32) -> [Field; 8] {
     let (y, z) = vec_split(state);
@@ -94,7 +88,7 @@ pub(crate) fn hydra_body_ks(key: [Field; 4], iv: [Field; 4]) -> [Field; 4] {
     vec_add(state, key)
 }
 
-fn matrix_e<R>(state: [Field; R]) -> [Field; R] {
+fn matrix_e<let R: u32>(state: [Field; R]) -> [Field; R] {
     let sum = state.reduce(|a,b| a + b);
     let rot_state = rotate_left(state);
     let mut result = [0; R];
@@ -104,7 +98,7 @@ fn matrix_e<R>(state: [Field; R]) -> [Field; R] {
     result
 }
 
-fn matrix_i<R,L>(state: [Field; R], mat:[[Field; R]; L]) -> [Field; R] {
+fn matrix_i<let R: u32, let L: u32>(state: [Field; R], mat:[[Field; R]; L]) -> [Field; R] {
     let sum = state.reduce(|a,b| a + b);
     let mut out = [sum; R];
     out[0] += state[0] * mat[0][0];
@@ -114,7 +108,7 @@ fn matrix_i<R,L>(state: [Field; R], mat:[[Field; R]; L]) -> [Field; R] {
     out
 }
 
-fn rotate_left<R>(mat: [Field; R]) -> [Field; R] {
+fn rotate_left<let R: u32>(mat: [Field; R]) -> [Field; R] {
     let mut rotated = [0; R];
     for i in 1..R {
         rotated[i-1] = mat[i];
@@ -164,7 +158,7 @@ fn vec_split(vec:  [Field; 8]) -> ([Field; 4], [Field; 4]) {
     ([vec[0], vec[1], vec[2], vec[3]], [vec[4], vec[5], vec[6], vec[7]])
 }
 
-fn vec_add<R>(lhs: [Field; R], rhs: [Field; R]) -> [Field; R] {
+fn vec_add<let R: u32>(lhs: [Field; R], rhs: [Field; R]) -> [Field; R] {
     let mut result = [0; R];
     for i in 0..R {
         result[i] = lhs[i] + rhs[i];
